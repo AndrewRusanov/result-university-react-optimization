@@ -1,4 +1,5 @@
 import { Navbar } from '@/widgets'
+import { ErrorBoundary } from '@app/providers'
 import { Outlet } from 'react-router-dom'
 
 const MainLayout = () => {
@@ -6,7 +7,9 @@ const MainLayout = () => {
     <>
       <Navbar />
       <main>
-        <Outlet />
+        <ErrorBoundary>
+          <Outlet />
+        </ErrorBoundary>
       </main>
     </>
   )

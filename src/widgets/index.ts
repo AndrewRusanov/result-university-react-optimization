@@ -1,3 +1,4 @@
+import { ErrorPage } from './ErrorPage'
 import { Navbar } from './Navbar'
 
-export { Navbar }
+export { ErrorPage, Navbar }
