@@ -1,6 +1,6 @@
 import { EmailIcon } from '@/shared/assets/icons/EmailIcon'
 import { TextInput } from '@shared/ui'
-import { FC, FormEvent, useState } from 'react'
+import { FC, FormEvent, useState, useTransition } from 'react'
 import styles from './SignIn.module.scss'
 
 export interface SignInFormData {
@@ -26,6 +26,7 @@ const SignIn: FC<Props> = ({ onSubmit }) => {
   const [email, setEmail] = useState<string | null>(null)
   const [password, setPassword] = useState<string | null>(null)
   const [errors, setErrors] = useState<Errors>(INITIAL_ERRORS)
+  const [isPending, startTransition] = useTransition()
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -49,7 +50,10 @@ const SignIn: FC<Props> = ({ onSubmit }) => {
   }
 
   return (
-    <form className={styles.container} onSubmit={event => handleSubmit(event)}>
+    <form
+      className={styles.container}
+      onSubmit={event => startTransition(() => handleSubmit(event))}
+    >
       <h1 className={styles.title}>Вход</h1>
       <TextInput
         id='Почта (вход)'
@@ -77,8 +81,8 @@ const SignIn: FC<Props> = ({ onSubmit }) => {
         required
         error={errors.password}
       />
-      <button type='submit' className={styles.submit_btn}>
-        Войти
+      <button disabled={isPending} type='submit' className={styles.submit_btn}>
+        {isPending ? 'Загрузка...' : 'Войти'}{' '}
       </button>
     </form>
   )

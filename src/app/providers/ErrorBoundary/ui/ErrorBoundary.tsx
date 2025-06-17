@@ -1,4 +1,4 @@
-import { ErrorPage } from '@/widgets'
+import { ErrorPage, Loader } from '@/widgets'
 import { Component, ErrorInfo, ReactNode, Suspense } from 'react'
 
 interface State {
@@ -32,7 +32,11 @@ class ErrorBoundary extends Component<Props, State> {
       )
     }
 
-    return this.props.children
+    return (
+      <Suspense fallback={<Loader text='Путешествие займёт 20 минут...' />}>
+        {this.props.children}
+      </Suspense>
+    )
   }
 }
 
