@@ -1,11 +1,33 @@
-import { Category } from '@pages/Category'
-import { Details } from '@pages/Details'
-import { Home } from '@pages/Home'
-import { Login } from '@pages/Login'
-import { NotFound } from '@pages/NotFound'
+import { lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { MainLayout } from './layout'
 import { PrivateRoute } from './providers'
+
+const Home = lazy(() =>
+  import('@pages/Home').then(module => ({
+    default: module.Home,
+  }))
+)
+const Login = lazy(() =>
+  import('@pages/Login').then(module => ({
+    default: module.Login,
+  }))
+)
+const NotFound = lazy(() =>
+  import('@pages/NotFound').then(module => ({
+    default: module.NotFound,
+  }))
+)
+const Category = lazy(() =>
+  import('@pages/Category').then(module => ({
+    default: module.Category,
+  }))
+)
+const Details = lazy(() =>
+  import('@pages/Details').then(module => ({
+    default: module.Details,
+  }))
+)
 
 function App() {
   return (
