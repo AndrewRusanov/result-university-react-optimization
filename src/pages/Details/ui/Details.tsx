@@ -1,11 +1,9 @@
-import {
-  CategoryItem,
-  CategoryType,
-  Character,
-  Location,
-} from '@shared/types/categoriesTypes'
-import { fetchMockData } from '@shared/utils/fetchData'
-import { FC, useEffect, useState } from 'react'
+import { Loader } from '@/widgets'
+import { CategoryItem, CategoryType } from '@shared/types/categoriesTypes'
+import { Character } from '@shared/types/Character'
+import { Location } from '@shared/types/Location'
+import { useFetchData } from '@shared/utils/useFetchData'
+import { FC } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import styles from './Details.module.scss'
 
@@ -15,31 +13,12 @@ interface Props {
 
 const Details: FC<Props> = ({ category }) => {
   const { id } = useParams<{ id: string }>()
-  const [item, setItem] = useState<CategoryItem | null>(null)
-  const [loading, setLoading] = useState<boolean>(true)
-  const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchMockData(category)
+  const pageNumber = Math.ceil(Number(id) / 20)
 
-        const foundItem = data.find(dataItem => dataItem.id === Number(id))
-        if (!foundItem) throw new Error('Элемент не найден 0_о')
+  const { items, isLoading, error } = useFetchData(category, pageNumber)
 
-        setItem(foundItem)
-        setLoading(false)
-      } catch (error) {
-        setError(`${error}`)
-        setLoading(false)
-      }
-    }
-    fetchData()
-  }, [category, id])
-
-  if (loading) return <div>Загрузка...</div>
-  if (error) return <div>Ошибка загрузки данных: {error}</div>
-  if (!item) return <div>Элемент не найден 0_о</div>
+  const item = items.find(item => item.id === Number(id))
 
   const isCharacter = (item: CategoryItem): item is Character => {
     return (item as Character).image !== undefined
@@ -48,6 +27,10 @@ const Details: FC<Props> = ({ category }) => {
   const isLocation = (item: CategoryItem): item is Location => {
     return (item as Location).dimension !== undefined
   }
+
+  if (isLoading) return <Loader text='Загрузка данных...' />
+  if (error) return <div>Ошибка загрузки данных: {error}</div>
+  if (!item) return <div>Элемент не найден 0_о</div>
 
   return (
     <div className={styles.details}>

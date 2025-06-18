@@ -23,13 +23,13 @@ const Navbar = () => {
         Rick & Morty
       </NavLink>
       <div className={styles.links}>
-        <NavLink to='/characters' className={styles.link}>
+        <NavLink to='/character' className={styles.link}>
           Персонажи
         </NavLink>
-        <NavLink to='/episodes' className={styles.link}>
+        <NavLink to='/episode' className={styles.link}>
           Эпизоды
         </NavLink>
-        <NavLink to='/locations' className={styles.link}>
+        <NavLink to='/location' className={styles.link}>
           Локации
         </NavLink>
         <button
