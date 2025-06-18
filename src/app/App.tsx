@@ -45,50 +45,50 @@ function App() {
             }
           />
           <Route
-            path='/characters'
+            path='/character'
             element={
               <PrivateRoute>
-                <Category category='characters' />
+                <Category category='character' />
               </PrivateRoute>
             }
           />
           <Route
-            path='/characters/:id'
+            path='/character/:id'
             element={
               <PrivateRoute>
-                <Details category='characters' />
+                <Details category='character' />
               </PrivateRoute>
             }
           />
           <Route
-            path='/episodes'
+            path='/episode'
             element={
               <PrivateRoute>
-                <Category category='episodes' />
+                <Category category='episode' />
               </PrivateRoute>
             }
           />
           <Route
-            path='/episodes/:id'
+            path='/episode/:id'
             element={
               <PrivateRoute>
-                <Details category='episodes' />
+                <Details category='episode' />
               </PrivateRoute>
             }
           />
           <Route
-            path='/locations'
+            path='/location'
             element={
               <PrivateRoute>
-                <Category category='locations' />
+                <Category category='location' />
               </PrivateRoute>
             }
           />
           <Route
-            path='/locations/:id'
+            path='/location/:id'
             element={
               <PrivateRoute>
-                <Category category='locations' />
+                <Category category='location' />
               </PrivateRoute>
             }
           />
