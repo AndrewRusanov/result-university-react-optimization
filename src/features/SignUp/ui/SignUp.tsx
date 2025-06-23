@@ -1,7 +1,7 @@
 import { AtIcon } from '@shared/assets/icons/AtIcon'
 import { EmailIcon } from '@shared/assets/icons/EmailIcon'
 import { GenderSelect, TextInput } from '@shared/ui'
-import { FC, FormEvent, useState } from 'react'
+import { FC, FormEvent, useState, useTransition } from 'react'
 import styles from './SignUp.module.scss'
 
 export interface FormData {
@@ -34,6 +34,7 @@ const SignUp: FC<Props> = ({ onSubmit }) => {
   const [password, setPassword] = useState<string | null>(null)
   const [confirmPassword, setConfirmPassword] = useState<string | null>(null)
   const [errors, setErrors] = useState<Errors>(INITIAL_ERRORS)
+  const [isPending, startTransition] = useTransition()
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -75,7 +76,10 @@ const SignUp: FC<Props> = ({ onSubmit }) => {
   }
 
   return (
-    <form className={styles.container} onSubmit={event => handleSubmit(event)}>
+    <form
+      className={styles.container}
+      onSubmit={event => startTransition(() => handleSubmit(event))}
+    >
       <h1 className={styles.title}>Регистрация</h1>
       <TextInput
         id='Имя'
@@ -152,8 +156,8 @@ const SignUp: FC<Props> = ({ onSubmit }) => {
         placeholder=''
         required
       />
-      <button type='submit' className={styles.submit_btn}>
-        Зарегистрироваться
+      <button disabled={isPending} type='submit' className={styles.submit_btn}>
+        {isPending ? 'Загрузка...' : 'Зарегистрироваться'}
       </button>
     </form>
   )

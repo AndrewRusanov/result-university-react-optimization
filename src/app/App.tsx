@@ -1,11 +1,33 @@
-import { Category } from '@pages/Category'
-import { Details } from '@pages/Details'
-import { Home } from '@pages/Home'
-import { Login } from '@pages/Login'
-import { NotFound } from '@pages/NotFound'
+import { lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { MainLayout } from './layout'
 import { PrivateRoute } from './providers'
+
+const Home = lazy(() =>
+  import('@pages/Home').then(module => ({
+    default: module.Home,
+  }))
+)
+const Login = lazy(() =>
+  import('@pages/Login').then(module => ({
+    default: module.Login,
+  }))
+)
+const NotFound = lazy(() =>
+  import('@pages/NotFound').then(module => ({
+    default: module.NotFound,
+  }))
+)
+const Category = lazy(() =>
+  import('@pages/Category').then(module => ({
+    default: module.Category,
+  }))
+)
+const Details = lazy(() =>
+  import('@pages/Details').then(module => ({
+    default: module.Details,
+  }))
+)
 
 function App() {
   return (
@@ -23,50 +45,50 @@ function App() {
             }
           />
           <Route
-            path='/characters'
+            path='/character'
             element={
               <PrivateRoute>
-                <Category category='characters' />
+                <Category category='character' />
               </PrivateRoute>
             }
           />
           <Route
-            path='/characters/:id'
+            path='/character/:id'
             element={
               <PrivateRoute>
-                <Details category='characters' />
+                <Details category='character' />
               </PrivateRoute>
             }
           />
           <Route
-            path='/episodes'
+            path='/episode'
             element={
               <PrivateRoute>
-                <Category category='episodes' />
+                <Category category='episode' />
               </PrivateRoute>
             }
           />
           <Route
-            path='/episodes/:id'
+            path='/episode/:id'
             element={
               <PrivateRoute>
-                <Details category='episodes' />
+                <Details category='episode' />
               </PrivateRoute>
             }
           />
           <Route
-            path='/locations'
+            path='/location'
             element={
               <PrivateRoute>
-                <Category category='locations' />
+                <Category category='location' />
               </PrivateRoute>
             }
           />
           <Route
-            path='/locations/:id'
+            path='/location/:id'
             element={
               <PrivateRoute>
-                <Category category='locations' />
+                <Category category='location' />
               </PrivateRoute>
             }
           />
